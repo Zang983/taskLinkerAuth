@@ -43,6 +43,6 @@ final class StatusFactory extends PersistentProxyObjectFactory
     {
         return $this
             // ->afterInstantiate(function(Status $status): void {})
-        ;
+            ;
     }
 }

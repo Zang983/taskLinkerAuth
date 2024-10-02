@@ -33,13 +33,16 @@ final class UserFactory extends PersistentProxyObjectFactory
     {
         $firstname = self::faker()->firstName(32);
         $lastname = self::faker()->lastName(32);
-        $email = $firstname.'.'.$lastname.'@bewize.com';
+        $email = strtolower($firstname.'.'.$lastname.'@bewize.com');
+
         return [
             'contract_type' => self::faker()->randomElement(['CDI', 'CDD', 'Freelance', 'Stage', 'Alternance']),
             'email' => $email,
             'employement_date' => self::faker()->dateTime(),
             'firstname' =>$firstname,
+            'isEmployee' => self::faker()->boolean(),
             'lastname' => $lastname,
+            'password' => self::faker()->text(60),
         ];
     }
 

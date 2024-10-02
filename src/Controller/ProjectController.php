@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ProjectController extends AbstractController
 {
-    #[Route('/', name: 'home')]
+    #[Route('/project', name: 'home_project')]
     public function index(ProjectRepository $projectRepository): Response
     {
         $projects = $projectRepository->findAll();
@@ -36,7 +36,7 @@ class ProjectController extends AbstractController
             $project = $form->getData();
             $entityProjectManager->persist($project);
             $entityProjectManager->flush();
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('home_project');
         }
         return $this->render('project/form.html.twig', [
             'controller_name' => 'CreateProjectController',
@@ -53,7 +53,7 @@ class ProjectController extends AbstractController
         }
         $entityProjectManager->remove($project);
         $entityProjectManager->flush();
-        return $this->redirectToRoute('home');
+        return $this->redirectToRoute('home_project');
     }
 
     #[Route('/project/edit/{id}', name: 'edit_project')]
@@ -71,7 +71,7 @@ class ProjectController extends AbstractController
             $project = $form->getData();
             $entityProjectManager->persist($project);
             $entityProjectManager->flush();
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('home_project');
         }
 
         return $this->render('project/form.html.twig', [

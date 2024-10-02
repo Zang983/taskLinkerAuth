@@ -2,18 +2,36 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\User;
 use App\Factory\ProjectFactory;
 use App\Factory\StatusFactory;
 use App\Factory\TaskFactory;
 use App\Factory\UserFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+
 
 class AppFixtures extends Fixture
 {
+    /**
+     * @var true
+     */
+    private bool $isEnvironmentTest = false;
+/*    private UserPasswordHasherInterface $passwordHasher;*/
+
+    public function __construct(UserPasswordHasherInterface $passwordHasher)
+    {
+        $this->passwordHasher = $passwordHasher;
+    }
     public function load(ObjectManager $manager): void
     {
-        $users = UserFactory::createMany(20);
+        $users = UserFactory::createMany(20,function (){
+            return['password' => $this->isEnvironmentTest ? 'password' : $this->passwordHasher->hashPassword(
+                    new User(),
+                    'password'
+                )];
+        });
         $projects = ProjectFactory::createMany(10, function () use ($users) {
             // Associer plusieurs utilisateurs à chaque projet
             $assignedUsers = [];

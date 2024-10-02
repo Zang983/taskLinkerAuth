@@ -7,9 +7,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-class User
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -22,14 +24,20 @@ class User
     #[ORM\Column(length: 32)]
     private ?string $lastname = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
+    #[Assert\Email (message: 'Please enter a valid email address')]
     private ?string $email = null;
 
     #[ORM\Column(length: 32)]
     private ?string $contract_type = null;
+    #[ORM\Column(length: 60)]
+    private ?string $password = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $employement_date = null;
+
+    #[ORM\Column (options: ['default' => true])]
+    private ?bool $isEmployee = null;
 
     /**
      * @var Collection<int, Task>
@@ -128,6 +136,43 @@ class User
         return $this;
     }
 
+    public function getIsEmployee(): ?bool
+    {
+        return $this->isEmployee;
+    }
+    public function getRoles(): array{
+        if($this->isEmployee){
+            return ['ROLE_EMPLOYEE'];
+        }
+        return ['ROLE_MANAGER'];
+    }
+
+    public function setIsEmployee(bool $isEmployee): static
+    {
+        $this->isEmployee = $isEmployee;
+
+        return $this;
+    }
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(string $password): static
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+    public function eraseCredentials(): void
+    {
+        // TODO: Implement eraseCredentials() method.
+    }
+    public function getUserIdentifier(): string
+    {
+        return $this->email;
+    }
+
     /**
      * @return Collection<int, Task>
      */
@@ -184,6 +229,4 @@ class User
 
         return $this;
     }
-
-
 }

@@ -1,0 +1,15 @@
+{% extends 'baseForLogPages.html.twig' %}
+
+{% block body %}
+
+    <main id="home-page">
+        <h1>Bienvenue sur TaskLinker</h1>
+        <h2>Commencez dès maintenant - gratuitement</h2>
+        <p>Vous avez déjà un compte ?</p>
+        <a href="{{ path('app_login') }}">Se connecter</a>
+        <div>ou</div>
+        <a href="{{ path('app_register') }}">Créer un compte</a>
+
+    </main>
+
+{% endblock %}

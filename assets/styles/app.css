@@ -19,6 +19,20 @@ div#main-container {
     display: flex;
     min-height: 100vh;
 }
+#main-container-ForLogPages{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-image: url("../img/background-login.jpg");
+    background-size: cover;
+}
+#main-container-ForLogPages #content{
+    flex-grow: 1;
+}
+#main-container-ForLogPages header{
+    height:150px;
+    padding:50px;
+}
 
 nav {
     width: 300px;
@@ -78,7 +92,7 @@ ul#main-menu i {
     height: 22px;
 }
 
-header {
+header:not(#main-container-ForLogPages header) {
     background: #4D8077;
     height: 155px;
     padding: 30px 80px 10px 80px;
