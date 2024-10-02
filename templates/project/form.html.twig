@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ titleBlock }}{% endblock %}
+
+{% block body %}
+
+    {{ form_start(form) }}
+    {{ form_row(form.name) }}
+    {{ form_row(form.users) }}
+    {{ form_end(form) }}
+
+{% endblock %}

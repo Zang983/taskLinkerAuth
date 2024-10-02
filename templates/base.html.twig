@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+
+    {% block stylesheets %}
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+              integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+              crossorigin="anonymous" referrerpolicy="no-referrer"/>
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
+    {% endblock %}
+
+
+    {% block javascripts %}
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+                integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+        <script src="{{ asset('select.js') }}">
+        </script>
+        {% block importmap %}{{ importmap('app') }}{% endblock %}
+    {% endblock %}
+</head>
+<body>
+<div id="main-container">
+    <nav>
+        <a href={{ path('home') }} id="logo">
+            <img src="{{ asset('img/logo.png') }}" alt="Logo TaskLinker"/>
+        </a>
+        <ul id="main-menu">
+            {# Récupère l'URL pour savoir où appliquer la classe active #}
+            {% set current_url = app.request.pathinfo %}
+            <li class="{{ current_url matches '/team/' ? '' : 'active' }}">
+                <a href={{ path('home') }}>
+                    <i class="fa-solid fa-list-check"></i> Projets
+                </a>
+            </li>
+            <li class="{{ current_url matches '/team/' ? 'active' : '' }}">
+                <a href="{{ path('team') }}">
+                    <i class="fa-regular fa-user"></i> Équipe
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <main>
+        <header>
+            <div id="current-user"></div>
+            {% if projectTeam is defined %}
+                <div id="title-page">
+                    <div class="flex-header">
+                        {% if titlePage is defined %}
+                            <h1>{{ titlePage }}</h1>
+                        {% endif %}
+                        <div class="user-list">
+                            {% for member in projectTeam %}
+                            <div class="avatar">{{ member.getInitials() }}</div>
+                            {% endfor %}
+                        </div>
+                        <a class="button" href="/project/edit/{{ project.id }}">Modifier</a>
+                    </div>
+                </div>
+            {% else %}
+                <div id="title-page">
+                    {% if titlePage is defined %}
+                        <h1>{{ titlePage }}</h1>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </header>
+        <div id="content">
+            {% block body %}{% endblock %}
+        </div>
+    </main>
+</div>
+
+</body>
+</html>

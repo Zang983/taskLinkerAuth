@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {% if task is defined %}
+        {{ task.title }}
+    {% else %}
+        Créer une tâche
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {% if task is defined %}
+        <a href="{{ path('delete_task', {'id': task.id}) }}" class="delete-task">Supprimer</a>
+    {% endif %}
+    {{ form_end(form) }}
+
+    {% if task is defined %}
+
+    {% endif %}
+{% endblock %}
