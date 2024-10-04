@@ -10,12 +10,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
+#[isGranted('ROLE_EMPLOYEE')]
 class TeamController extends AbstractController
 {
     #[Route('/team', name: 'team')]
     public function index(UserRepository $userRepository): Response
     {
+
         $team = $userRepository->findAll();
         return $this->render('team/index.html.twig', [
             'controller_name' => 'TeamController',
@@ -25,6 +28,7 @@ class TeamController extends AbstractController
 
     }
     #[Route('/team/edit/{id}', name: 'edit_member')]
+    #[isGranted('ROLE_ADMIN')]
     public function editMember(User $user, EntityManagerInterface $entityUserManager,Request $request): Response
     {
         if(!$user){

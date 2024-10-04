@@ -11,27 +11,73 @@ html, body {
     font-family: 'Manrope', sans-serif;
 }
 
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
 .sf-toolbar {
     position: fixed;
+}
+
+.btn {
+    width: 224px;
+    height: 74px;
+    border-radius: 10px;
+    font-size: 14px;
+    line-height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+}
+
+.btn-primary {
+
+    background: #1C5B50;
+    color: white;
+}
+
+.btn-secondary {
+    background: #E5F6DC;
+    color: #1C5B50;
+}
+
+.btn-tertiary {
+    background: #B1D89D;
+    color: #4D8077;
+}
+
+.btn-form {
+    width: 100%;
+    outline: none;
+    border: none;
 }
 
 div#main-container {
     display: flex;
     min-height: 100vh;
 }
-#main-container-ForLogPages{
+
+#main-container-ForLogPages {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
     background-image: url("../img/background-login.jpg");
     background-size: cover;
 }
-#main-container-ForLogPages #content{
+
+#main-container-ForLogPages #content {
     flex-grow: 1;
 }
-#main-container-ForLogPages header{
-    height:150px;
-    padding:50px;
+
+#main-container-ForLogPages header {
+    height: 150px;
+    padding: 50px;
+}
+
+header {
+    position: relative;
 }
 
 nav {
@@ -114,6 +160,156 @@ div#title-page h1 {
 div#content {
     padding: 45px 80px;
 }
+
+/* Home page, register and login */
+#home-page, #register-page, #login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#home-page *, #register-page *, #login-page * {
+    margin: 0;
+    padding: 0;
+}
+
+#home-page h2 {
+    font-weight: 400;
+    line-height: 30px;
+    margin-bottom: 56px;
+}
+
+#home-page h3 {
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 24px;
+}
+#home-page .container-primary{
+    padding-top: 140px;
+    padding-bottom: 120px;
+}
+.container-primary {
+    display: flex;
+    gap: 24px;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+    border-radius: 30px;
+    color: white;
+    background-color: #4D8077;
+    padding-top: 140px;
+    padding-bottom: 120px;
+}
+.choice--separator {
+    margin: 24px;
+    font-size: 18px;
+    position: relative;
+}
+
+.choice--separator::before, .choice--separator::after {
+    content: '';
+    border-top: 1px solid white;
+    width: 140px;
+    position: absolute;
+    top: calc(50% + 1px);
+    transform: translateX(calc(-100% - 22px));
+}
+
+.choice--separator::after {
+    transform: translateX(22px);
+}
+
+/* Login Page */
+#login-page .container-primary {
+    padding-top: 110px;
+    padding-bottom: 148px;
+}
+
+#login-form {
+    width: 43.66%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+}
+
+#login-form label, #register-form label {
+    width: 100%;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#login-form h1, #register-form h1 {
+    font-size: 34px;
+    font-weight: 700;
+    line-height: 46px;
+}
+
+#login-form p {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 19px;
+    color: #FFFFFF;
+}
+
+#login-form a {
+    text-decoration: underline;
+}
+
+#register-page .container-primary {
+    padding-top: 52px;
+    padding-bottom: 44px;
+}
+
+#register-page h1 {
+    margin-bottom: 47px;
+}
+
+#register-form div {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 22px;
+    position: relative;
+}
+
+#register-form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+#register-form label {
+    color: white;
+}
+
+#register-form button {
+    margin-top: 13px;
+}
+
+#register-page a {
+    text-decoration: underline !important;
+    font-size: 14px;
+    line-height: 19px;
+}
+
+.toggle-password-container {
+    display: flex;
+    position: relative;
+}
+
+.toggle-password-container button {
+    position: absolute;
+    transform: translateY(calc(-50% - 10px));
+    color: white;
+}
+
+
+/* Project page */
 
 .card-project {
     width: 223px;
@@ -203,6 +399,18 @@ div#projects-container {
     margin-left: -12px;
     background: #1C5B50;
     border: 1px solid lightgray;
+}
+
+.avatar--logged {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: white;
+    border: 1px solid #1C5B50;
+    color: #1C5B50;
+    font-weight: bold;
+
 }
 
 .user-list {

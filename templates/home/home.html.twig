@@ -2,13 +2,16 @@
 
 {% block body %}
 
-    <main id="home-page">
-        <h1>Bienvenue sur TaskLinker</h1>
-        <h2>Commencez dès maintenant - gratuitement</h2>
-        <p>Vous avez déjà un compte ?</p>
-        <a href="{{ path('app_login') }}">Se connecter</a>
-        <div>ou</div>
-        <a href="{{ path('app_register') }}">Créer un compte</a>
+    <main id="home-page" >
+        <div id="home--direction" class="container-primary">
+            <h1>Bienvenue sur TaskLinker</h1>
+            <h2>Commencez dès maintenant - gratuitement</h2>
+            <h3>Vous avez déjà un compte ?</h3>
+            <a href="{{ path('app_login') }}" class="btn btn-primary">Se connecter</a>
+            <div class="choice--separator">ou</div>
+            <a href="{{ path('app_register') }}" class="btn btn-tertiary">S'inscrire</a>
+        </div>
+
 
     </main>
 

@@ -28,12 +28,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\Email (message: 'Please enter a valid email address')]
     private ?string $email = null;
 
-    #[ORM\Column(length: 32)]
+    #[ORM\Column(length: 32, nullable: true, options: ['default' => 'CDI'])]
     private ?string $contract_type = null;
     #[ORM\Column(length: 60)]
     private ?string $password = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $employement_date = null;
 
     #[ORM\Column (options: ['default' => true])]
@@ -140,8 +140,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->isEmployee;
     }
-    public function getRoles(): array{
-        if($this->isEmployee){
+
+    public function getRoles(): array
+    {
+        if ($this->isEmployee) {
             return ['ROLE_EMPLOYEE'];
         }
         return ['ROLE_MANAGER'];
@@ -153,6 +155,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
     public function getPassword(): ?string
     {
         return $this->password;
@@ -164,10 +167,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
     public function eraseCredentials(): void
     {
         // TODO: Implement eraseCredentials() method.
     }
+
     public function getUserIdentifier(): string
     {
         return $this->email;

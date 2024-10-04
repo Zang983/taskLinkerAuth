@@ -18,8 +18,6 @@ class AppFixtures extends Fixture
      * @var true
      */
     private bool $isEnvironmentTest = false;
-/*    private UserPasswordHasherInterface $passwordHasher;*/
-
     public function __construct(UserPasswordHasherInterface $passwordHasher)
     {
         $this->passwordHasher = $passwordHasher;

@@ -16,9 +16,11 @@
 <body>
 <div id="main-container-ForLogPages">
     <header>
-        <img src="{{ asset('img/logo.png') }}" alt="Logo TaskLinker"/>
+        <a href={{ path('home') }}>
+            <img src="{{ asset('img/logo.png') }}" alt="Logo TaskLinker"/>
+        </a>
     </header>
-        {% block body %}{% endblock %}
+    {% block body %}{% endblock %}
 </div>
 
 

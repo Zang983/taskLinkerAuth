@@ -67,6 +67,10 @@
                     {% endif %}
                 </div>
             {% endif %}
+            <div class="avatar avatar--logged">
+                <a href="{{ path('app_logout') }}">{{ app.user.getInitials() }}</a>
+            </div>
+
         </header>
         <div id="content">
             {% block body %}{% endblock %}

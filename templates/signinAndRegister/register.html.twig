@@ -1,0 +1,13 @@
+{% extends 'baseForLogPages.html.twig' %}
+{% block body %}
+
+    <main id="register-page">
+        <div class="container-primary">
+            <h1>S'inscrire</h1>
+            {{ form_start(form,{'attr':{'id':'register-form'}}) }}
+            {{ form_end(form) }}
+            <a href="{{ path("app_login") }}">Vous avez déjà un compte ?</a>
+        </div>
+    </main>
+
+{% endblock %}
