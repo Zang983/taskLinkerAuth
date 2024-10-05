@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[isGranted('ROLE_EMPLOYEE')]
+#[IsGranted('ROLE_MANAGER')]
 class TeamController extends AbstractController
 {
     #[Route('/team', name: 'team')]

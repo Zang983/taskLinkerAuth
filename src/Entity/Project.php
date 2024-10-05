@@ -31,6 +31,7 @@ class Project
      * @var Collection<int, User>
      */
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'projects')]
+    #[ORM\JoinTable(name: 'project_user')]
     private Collection $users;
 
 

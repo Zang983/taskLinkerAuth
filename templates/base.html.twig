@@ -57,7 +57,7 @@
                             <div class="avatar">{{ member.getInitials() }}</div>
                             {% endfor %}
                         </div>
-                        <a class="button" href="/project/edit/{{ project.id }}">Modifier</a>
+                        <a class="button" href="{{ path('edit_project',{'id':project.id}) }}">Modifier</a>
                     </div>
                 </div>
             {% else %}

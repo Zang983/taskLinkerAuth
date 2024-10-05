@@ -6,6 +6,7 @@ use App\Entity\Project;
 use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -23,6 +24,12 @@ class UserType extends AbstractType
                 'widget' => 'single_text',
                 'label' => 'Date d\'entrée'
             ])
+            ->add('is_employee', ChoiceType::class, [
+                'label' => 'Rôle',
+                'choices' => [
+                    'Employé' => true,
+                    'Manager' => false
+                ]])
             ->add('Enregistrer', SubmitType::class, ['attr' => ['class' => 'button button-submit']]);
     }
 

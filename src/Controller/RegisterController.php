@@ -20,13 +20,11 @@ class RegisterController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $form->getData();
             $user->setContractType('CDI');
-//            $user->setIsEmployee(true);
             $user->setEmployementDate(new \DateTime());
             $entityManager->persist($user);
             $entityManager->flush();
-            return $this->redirectToRoute('app_register');
+            return $this->redirectToRoute('home');
         }
-
         return $this->render(
             'signinAndRegister/register.html.twig',
             [

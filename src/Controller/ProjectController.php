@@ -10,26 +10,36 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 ## TODO : Gérer la création/édition et suppression de projets / utilisateurs / tâches (suppression également pour ce dernier)
 ## TODO : Faire un dernier check pour voir si tout est OK
 
+#[IsGranted('ROLE_USER')]
 class ProjectController extends AbstractController
 {
-    #[Route('/project', name: 'home_project')]
+    #[Route('/projects', name: 'home_project')]
     public function index(ProjectRepository $projectRepository): Response
     {
-        $projects = $projectRepository->findAll();
+        $hasAccessToAllProjects = $this->isGranted('ROLE_MANAGER');
+
+        if($hasAccessToAllProjects)
+            $projects = $projectRepository->findAll();
+        else{
+            $user = $this->getUser();
+            $projects = $user->getProjects();
+        }
         return $this->render('project/index.html.twig', [
             'controller_name' => 'ProjectController',
             'titlePage' => 'Projets',
-            'projects' => $projects,
+            'projects' => $projects ?? [],
         ]);
     }
 
     #[Route('/project/create', name: 'create_project')]
     public function createProject(Request $request, EntityManagerInterface $entityProjectManager): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_MANAGER');
         $form = $this->createForm(ProjectType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -48,6 +58,7 @@ class ProjectController extends AbstractController
     #[Route('/project/delete/{id}', name: 'delete_project')]
     public function deleteProject(EntityManagerInterface $entityProjectManager, Project $project): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_MANAGER');
         if (!$project) {
             throw $this->createNotFoundException('Project not found');
         }
@@ -62,6 +73,7 @@ class ProjectController extends AbstractController
         EntityManagerInterface $entityProjectManager,
         Request $request
     ): Response {
+        $this->denyAccessUnlessGranted('ROLE_MANAGER');
         if (!$project) {
             throw $this->createNotFoundException('Project not found');
         }
