@@ -22,7 +22,8 @@ class ProjectType extends AbstractType
                 'class' => User::class,
                 'choice_label' => 'fullName',
                 'multiple' => true,
-                'label'=>'Inviter des membres'
+                'label'=>'Inviter des membres',
+                'by_reference' => false,
             ]
             )
             ->add('Continuer', SubmitType::class, [

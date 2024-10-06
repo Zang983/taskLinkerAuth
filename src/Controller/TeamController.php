@@ -65,13 +65,11 @@ class TeamController extends AbstractController
     }
 
     #[Route('/team/member/delete/{id}', name: 'deleteMember')]
-    public function deleteMember(int $id, EntityManagerInterface $entityUserManager): Response
+    public function deleteMember(User $user, EntityManagerInterface $entityUserManager): Response
     {
         if(!$user){
             throw $this->createNotFoundException('User not found');
         }
-        $repository = $entityUserManager->getRepository(User::class);
-        $user = $repository->find($id);
         $entityUserManager->remove($user);
         $entityUserManager->flush();
         return $this->redirectToRoute('team');

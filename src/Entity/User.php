@@ -37,7 +37,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?\DateTimeInterface $employement_date = null;
 
     #[ORM\Column (options: ['default' => true])]
-    private ?bool $isEmployee = null;
+    private ?bool $isEmployee = true;
 
     /**
      * @var Collection<int, Task>

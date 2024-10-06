@@ -15,19 +15,22 @@
                                 <p>{{ task.description }}</p>
                             {% endif %}
                             <div class="task-infos">
-                                {% if task.deadline is not empty %}
+                                {% if task.deadline %}
                                     <div class="task-deadline">
                                         <i class="fa-regular fa-calendar"></i> {{ task.deadline|date('d/m/Y') }}
                                     </div>
                                 {% endif %}
-                                <div class="mini-user">
-                                    {{ task.user.getInitials() }}
-                                </div>
+                                {% if task.user %}
+                                    <div class="mini-user">
+                                        {{ task.user.getInitials() }}
+                                    </div>
+                                {% endif %}
                             </div>
                         </a>
                     </div>
                 {% endfor %}
-                <a href="{{ path('create_task',{'idStatus':status.idStatus,'idProject':project.id}) }}" class="task-add">
+                <a href="{{ path('create_task',{'idStatus':status.idStatus,'idProject':project.id}) }}"
+                   class="task-add">
                     + Ajouter une tâche
                 </a>
             </div>

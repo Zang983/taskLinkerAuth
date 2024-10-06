@@ -121,7 +121,11 @@ class Project
     public function removeUser(User $user): static
     {
         $this->users->removeElement($user);
-
+        $this->getTasks()->map(function(Task $task) use ($user) {
+            if ($task->getUser() === $user) {
+                $task->setUser(null);
+            }
+        });
         return $this;
     }
 
