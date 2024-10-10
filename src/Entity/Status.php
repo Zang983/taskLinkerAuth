@@ -16,6 +16,7 @@ class Status
 private ?int $id = null;
 
 #[ORM\Column(length: 16)]
+#[Assert\NotNull(message: 'Le libellé ne peut pas être vide')]
 private ?string $libelle = null;
 
 /**

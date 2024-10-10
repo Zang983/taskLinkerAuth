@@ -16,6 +16,7 @@ class Project
     private ?int $id = null;
 
     #[ORM\Column(length: 40)]
+    #[Assert\NotNull(message: 'Le titre du projet ne peut pas être vide')]
     private ?string $name = null;
 
     #[ORM\Column]

@@ -7,10 +7,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[UniqueEntity(['email'], message: 'Cette adresse email est déjà utilisée.')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -19,18 +22,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 32)]
+    #[Assert\Length(min: 2, max: 32, minMessage: 'Votre prénom doit avoir minimum {{ limit }} caractères de long', maxMessage: 'Votre prénom doit avoir maximum {{ limit }} caractères de long')]
     private ?string $firstname = null;
 
     #[ORM\Column(length: 32)]
+    #[Assert\Length(min: 2, max: 32, minMessage: 'Votre nom doit avoir minimum  {{ limit }} caractères de long', maxMessage: 'Votre nom doit avoir maximum {{ limit }} caractères de long')]
     private ?string $lastname = null;
 
     #[ORM\Column(length: 255, unique: true)]
-    #[Assert\Email (message: 'Please enter a valid email address')]
+    #[Assert\Email(message: 'L\'adresse {{ value }} n\'est pas une adresse email valide.')]
     private ?string $email = null;
 
     #[ORM\Column(length: 32, nullable: true, options: ['default' => 'CDI'])]
     private ?string $contract_type = null;
     #[ORM\Column(length: 60)]
+    #[Assert\Assert\PasswordStrength(minLength: 8, minStrength: 'medium', message: 'Votre mot de passe doit contenir au moins 8 caractères dont une majuscule, une minuscule, un chiffre et un caractère spécial')]
     private ?string $password = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]

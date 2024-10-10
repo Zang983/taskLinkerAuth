@@ -15,9 +15,11 @@ class Task
     private ?int $id = null;
 
     #[ORM\Column(length: 40)]
+    #[Assert\NotNull(message: 'Le titre ne peut pas être vide')]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotNull(message: 'La description ne peut pas être vide')]
     private ?string $description = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
