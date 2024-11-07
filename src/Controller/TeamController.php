@@ -28,7 +28,6 @@ class TeamController extends AbstractController
 
     }
     #[Route('/team/edit/{id}', name: 'edit_member')]
-    #[isGranted('ROLE_ADMIN')]
     public function editMember(User $user, EntityManagerInterface $entityUserManager,Request $request): Response
     {
         if(!$user){

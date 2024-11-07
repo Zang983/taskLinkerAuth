@@ -11,6 +11,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\PasswordStrength;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(['email'], message: 'Cette adresse email est déjà utilisée.')]
@@ -35,8 +36,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 32, nullable: true, options: ['default' => 'CDI'])]
     private ?string $contract_type = null;
-    #[ORM\Column(length: 60)]
-    #[Assert\Assert\PasswordStrength(minLength: 8, minStrength: 'medium', message: 'Votre mot de passe doit contenir au moins 8 caractères dont une majuscule, une minuscule, un chiffre et un caractère spécial')]
+#[ORM\Column(length: 60)]
+#[Assert\PasswordStrength([
+    'minScore' => PasswordStrength::STRENGTH_MEDIUM,
+])]
     private ?string $password = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
