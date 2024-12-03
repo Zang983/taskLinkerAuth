@@ -3,3 +3,10 @@ scheb_two_factor:
     security_tokens:
         - Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken
         - Symfony\Component\Security\Http\Authenticator\Token\PostAuthenticationToken
+    google:
+        enabled: true
+#        server_name : 'TaskLinker'
+#        issuer : Issuer Name
+#        digits : 6
+#        leeway : 0
+#        template : security/2fa_form.html.twig
