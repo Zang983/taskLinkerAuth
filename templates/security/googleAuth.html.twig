@@ -1,0 +1,31 @@
+{% extends 'baseForLogPages.html.twig' %}
+
+{% block body %}
+
+
+    {% if authenticationError %}
+        <div class="alert alert-danger">{{ authenticationError.messageKey|trans(authenticationError.messageData, 'security') }}</div>
+    {% endif %}
+
+    <form method="post" action="{{ path(checkPathRoute) }}" id="google_auth">
+        <h1>Authentification à deux facteurs</h1>
+        <div class="form-group">
+            <label for="auth_code">Code d'authentification</label>
+            <input type="text" id="auth_code" name="{{ authCodeParameterName }}" class="form-control" required
+                   autofocus>
+        </div>
+
+        {% if displayTrustedOption %}
+            <div class="form-group form-check">
+                <input type="checkbox" id="trusted" name="{{ trustedParameterName }}" class="form-check-input">
+                <label for="trusted" class="form-check-label">Faire confiance à cet appareil</label>
+            </div>
+        {% endif %}
+        <div id="form_submit_btns">
+            <button type="submit" class="btn btn-primary">Valider</button>
+            <a href="{{ logoutPath }}" class="btn btn-secondary">Annuler</a>
+        </div>
+    </form>
+
+
+{% endblock %}

@@ -751,3 +751,36 @@ form .select2-container--default .select2-selection--multiple .select2-selection
         padding: 13px;
     }
 }
+
+/* Account */
+
+/* Google Auth Form */
+#google_auth{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    background: white;
+    padding: 150px 0;
+    width: 35%;
+    transform: translateY(-25%);
+    border-radius: 10px;
+    border:3px solid #1C5B50;
+}
+#form_submit_btns{
+    display:flex;
+    gap:15px;
+}
+#form_submit_btns button{
+    outline:none;
+    border:none;
+}
+#form_submit_btns button:hover{
+    cursor:pointer;
+}
+#form_submit_btns .btn-secondary{
+    background:white;
+    color:#1C5B50;
+    border:2px solid #1C5B50;
+}

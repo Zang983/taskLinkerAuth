@@ -3,12 +3,11 @@
 {% block title %}Votre compte{% endblock %}
 
 {% block body %}
-    {{ form(form) }}
-{#    {% if app.flashes(success) %}#}
-{#        <div class="alert alert-success">{{ app.flashes(success) }}</div>#}
-{#    {% endif %}#}
-{#    {% if app.flashes(error) %}#}
-{#        <div class="alert alert-danger">{{ app.flashes(error) }}</div>#}
-{#    {% endif %}#}
-    {{ dump(QrCode) }}
+    <main id="account">
+        {{ form(form) }}
+        {% if (QrCode)  %}
+            <img src="{{ QrCode }}" alt="QR Code"/>
+        {% endif %}
+    </main>
+
 {% endblock %}
