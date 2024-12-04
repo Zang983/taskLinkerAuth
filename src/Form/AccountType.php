@@ -30,10 +30,16 @@ class AccountType extends AbstractType
                 'mapped' => false,
             ])
             ->add('googleAuth', CheckboxType::class, [
-                'label' => 'Activer l\'authentification à deux facteurs',
+                'label' => 'Activer Google Auth',
                 'required' => false,
                 'mapped' => false,
                 'data' => !empty($user->getGoogleAuthenticatorSecret()) // Initialiser la checkbox
+            ])
+            ->add('emailAuth', CheckboxType::class, [
+                'label' => 'Activer la double authentification par mail',
+                'required' => false,
+                'mapped' => false,
+                'data' => !empty($user->isEmailAuthEnabled()) // Initialiser la checkbox
             ])
             ->add('Enregistrer', SubmitType::class, ['attr' => ['class' => 'button button-submit']]);
     }

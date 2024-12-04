@@ -13,6 +13,7 @@ use Endroid\QrCode\RoundBlockSizeMode;
 use Endroid\QrCode\Writer\PngWriter;
 use Scheb\TwoFactorBundle\Security\TwoFactor\Provider\Google\GoogleAuthenticatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -65,12 +66,8 @@ class SecurityController extends AbstractController
         $form = $this->createForm(AccountType::class, $user, ['user' => $user]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($form['password']->getData()) {
-                $user->setPassword($hasher->hashPassword($user, $form['password']->getData()));
-            }
-            $form['googleAuth']->getData() === true ? $user->setGoogleAuthenticatorSecret(
-                $this->googleAuthenticator->generateSecret()
-            ) : $user->setGoogleAuthenticatorSecret(null);
+            $this->updateUserPassword($user, $hasher, $form);
+            $this->handleDoubleAuthEnabled($user, $form);
             try {
                 $entityManager->flush();
             } catch (\Exception $e) {
@@ -86,6 +83,7 @@ class SecurityController extends AbstractController
             'QrCode' => $user->isGoogleAuthenticatorEnabled() ? '/qrCodes/' . $user->getId() . '.png' : null
         ]);
     }
+
 
     #[Route(path: '/getGoogleAuth', name: 'app_google_auth')]
     public function getGoogleAuth()
@@ -105,7 +103,7 @@ class SecurityController extends AbstractController
             size: 400,
             margin: 10,
             roundBlockSizeMode: RoundBlockSizeMode::Margin,
-            labelText: 'Scan the code',
+            labelText: 'Scan the code in Authenticator App',
             labelAlignment: LabelAlignment::Center
         );
         try {
@@ -114,6 +112,29 @@ class SecurityController extends AbstractController
             $qrCode->saveToFile($filePath);
         } catch (\Exception $e) {
             dd($e);
+        }
+    }
+
+    private function updateUserPassword(
+        User $user,
+        UserPasswordHasherInterface $hasher,
+        FormInterface $form
+    ) {
+        if ($form['password']->getData()) {
+            $user->setPassword($hasher->hashPassword($user, $form['password']->getData()));
+        }
+    }
+
+    private function handleDoubleAuthEnabled(User $user, FormInterface $form): void
+    {
+        if ($form['googleAuth']->getData()) {
+            $user->setStatusEmailAuthEnabled(false);
+            $user->setGoogleAuthenticatorSecret($this->googleAuthenticator->generateSecret());
+        } else {
+            $user->setGoogleAuthenticatorSecret(null);
+            $form['emailAuth']->getData() ? $user->setStatusEmailAuthEnabled(true) : $user->setStatusEmailAuthEnabled(
+                false
+            );
         }
     }
 

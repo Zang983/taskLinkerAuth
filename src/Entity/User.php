@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Scheb\TwoFactorBundle\Model\Google\TwoFactorInterface;
+
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -16,7 +17,8 @@ use Symfony\Component\Validator\Constraints\PasswordStrength;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(['email'], message: 'Cette adresse email est déjà utilisée.')]
-class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFactorInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFactorInterface,
+                      \Scheb\TwoFactorBundle\Model\Email\TwoFactorInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -25,6 +27,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
 
     #[ORM\Column(type: 'string', nullable: true)]
     private ?string $googleAuthenticatorSecret;
+
+    #[ORM\Column(type: 'string', nullable: true)]
+    private ?string $authCode;
     #[ORM\Column(length: 32)]
     #[Assert\Length(min: 2, max: 32, minMessage: 'Votre prénom doit avoir minimum {{ limit }} caractères de long', maxMessage: 'Votre prénom doit avoir maximum {{ limit }} caractères de long')]
     private ?string $firstname = null;
@@ -50,6 +55,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
 
     #[ORM\Column (options: ['default' => true])]
     private ?bool $isEmployee = true;
+
+    #[ORM\Column (type: 'boolean', options: ['default' => false])]
+    private ?bool $emailAuth = false;
 
     /**
      * @var Collection<int, Task>
@@ -152,6 +160,37 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
     {
         return $this->isEmployee;
     }
+
+    /* Email double auth start */
+    public function isEmailAuthEnabled(): bool
+    {
+        return $this->emailAuth;
+    }
+
+    public function getEmailAuthRecipient(): string
+    {
+        return $this->email;
+    }
+
+    public function getEmailAuthCode(): string
+    {
+        if (null === $this->authCode) {
+            throw new \LogicException('The email authentication code was not set');
+        }
+        return $this->authCode;
+    }
+
+    public function setEmailAuthCode(string $authCode): void
+    {
+        $this->authCode = $authCode;
+    }
+
+    public function setStatusEmailAuthEnabled(bool $status): void
+    {
+        $this->emailAuth = $status;
+    }
+
+    /* Email double auth end*/
 
     public function getRoles(): array
     {

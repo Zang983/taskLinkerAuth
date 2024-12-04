@@ -9,3 +9,10 @@ scheb_two_factor:
         digits : 6
         leeway : 0
         template : 'security/googleAuth.html.twig'
+    email:
+        digits: 6
+        enabled: true
+        sender_email : no-reply@test.com
+        sender_name : Zang
+        template : 'security/googleAuth.html.twig'
+
