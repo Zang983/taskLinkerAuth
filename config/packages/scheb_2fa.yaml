@@ -9,6 +9,7 @@ scheb_two_factor:
         digits : 6
         leeway : 0
         template : 'security/googleAuth.html.twig'
+        issuer : 'TaskLinker'
     email:
         digits: 6
         enabled: true

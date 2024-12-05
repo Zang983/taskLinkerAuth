@@ -102,6 +102,9 @@ class ProjectController extends AbstractController
             throw $this->createNotFoundException('Project not found');
         }
         $projectTeam = $project->getUsers();
+        if(!$projectTeam->contains($this->getUser()) && !$this->isGranted('ROLE_MANAGER')){
+            throw $this->createAccessDeniedException('Access Denied.');
+        }
         $tasks = $project->getTasks();
 
         $tasksByStatus = [

@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
@@ -56,6 +57,7 @@ class SecurityController extends AbstractController
         );
     }
 
+    #[IsGranted('ROLE_USER')]
     #[Route(path: '/account', name: 'app_account')]
     public function account(
         Request $request,

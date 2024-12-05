@@ -67,8 +67,9 @@
                     {% endif %}
                 </div>
             {% endif %}
-            <a href="{{ path('app_account') }}">Mon compte</a>
+
             <div class="avatar avatar--logged">
+                <a href="{{ path('app_account') }}" class="account_access">Mon compte</a>
                 <a href="{{ path('app_logout') }}">{{ app.user.getInitials() }}</a>
             </div>
 

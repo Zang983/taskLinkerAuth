@@ -400,7 +400,11 @@ div#projects-container {
     background: #1C5B50;
     border: 1px solid lightgray;
 }
-
+.account_access{
+    position:absolute;
+    left:-120px;
+    color:white;
+}
 .avatar--logged {
     position: absolute;
     right: 20px;
@@ -410,7 +414,6 @@ div#projects-container {
     border: 1px solid #1C5B50;
     color: #1C5B50;
     font-weight: bold;
-
 }
 
 .user-list {

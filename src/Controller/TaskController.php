@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[IsGranted('ROLE_USER')]
+#[IsGranted('ROLE_MANAGER')]
 class TaskController extends AbstractController
 {
     #[Route('/task/create/{idStatus}/{idProject}', name: 'create_task')]
@@ -23,7 +23,6 @@ class TaskController extends AbstractController
         int $idProject,
         EntityManagerInterface $entityManager
     ): Response {
-        $this->denyAccessUnlessGranted('ROLE_MANAGER');
         $status = $entityManager->getRepository(Status::class)->find($idStatus);
         $project = $entityManager->getRepository(Project::class)->find($idProject);
         if (!$status || !$project) {
@@ -52,7 +51,6 @@ class TaskController extends AbstractController
     #[Route('/task/edit/{id}', name: 'edit_task')]
     public function editTask(Task $task, Request $request, EntityManagerInterface $entityManager): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_MANAGER');
         if (!$task) {
             throw $this->createNotFoundException('Task not found');
         }
