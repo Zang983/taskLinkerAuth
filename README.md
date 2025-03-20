@@ -9,4 +9,5 @@
 
 ### Dépendances : 
 - PHP V8
+- Extension GD pour tester la double authentification par Google Auth
   
