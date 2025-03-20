@@ -8,8 +8,8 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\Tests\Fixtures\RepeatedPasswordField;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 
 class RegisterType extends AbstractType
 {
@@ -25,7 +25,7 @@ class RegisterType extends AbstractType
             ->add('email', EmailType::class, [
                 'label' => 'E-mail'
             ])
-            ->add('passwordConfirmation', RepeatedPasswordField::class, [
+            ->add('passwordConfirmation', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'first_options' => ['label' => 'Mot de passe', 'hash_property_path' => 'password','toggle'=>true],
                 'second_options' => ['label' => 'Confirmer le mot de passe','toggle'=>true],

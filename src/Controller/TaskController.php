@@ -49,7 +49,7 @@ class TaskController extends AbstractController
     }
 
     #[Route('/task/edit/{id}', name: 'edit_task')]
-    public function editTask(Task $task, Request $request, EntityManagerInterface $entityManager): Response
+    public function editTask(Request $request, EntityManagerInterface $entityManager, Task $task = null): Response
     {
         if (!$task) {
             throw $this->createNotFoundException('Task not found');
@@ -72,9 +72,8 @@ class TaskController extends AbstractController
             'task' => $task
         ]);
     }
-
     #[Route('/task/delete/{id}', name: 'delete_task')]
-    public function deleteTask(Task $task, EntityManagerInterface $entityManager): Response
+    public function deleteTask(EntityManagerInterface $entityManager, Task $task = null): Response
     {
         if (!$task) {
             throw $this->createNotFoundException('Task not found');
@@ -84,5 +83,4 @@ class TaskController extends AbstractController
         $entityManager->flush();
         return $this->redirectToRoute('project_detail', ['id' => $idProject]);
     }
-
 }

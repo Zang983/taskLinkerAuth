@@ -11,10 +11,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-
-## TODO : Gérer la création/édition et suppression de projets / utilisateurs / tâches (suppression également pour ce dernier)
-## TODO : Faire un dernier check pour voir si tout est OK
-
 #[IsGranted('ROLE_USER')]
 class ProjectController extends AbstractController
 {
@@ -56,7 +52,7 @@ class ProjectController extends AbstractController
     }
 
     #[Route('/project/delete/{id}', name: 'delete_project')]
-    public function deleteProject(EntityManagerInterface $entityProjectManager, Project $project): Response
+    public function deleteProject(EntityManagerInterface $entityProjectManager, Project $project = null): Response
     {
         $this->denyAccessUnlessGranted('ROLE_MANAGER');
         if (!$project) {
@@ -69,9 +65,9 @@ class ProjectController extends AbstractController
 
     #[Route('/project/edit/{id}', name: 'edit_project')]
     public function editProject(
-        Project $project,
         EntityManagerInterface $entityProjectManager,
-        Request $request
+        Request $request,
+        Project $project = null
     ): Response {
         $this->denyAccessUnlessGranted('ROLE_MANAGER');
         if (!$project) {
@@ -96,7 +92,7 @@ class ProjectController extends AbstractController
     }
 
     #[Route('/project/detail/{id}', name: 'project_detail')]
-    public function project(Project $project): Response
+    public function project(Project $project = null): Response
     {
         if (!$project) {
             throw $this->createNotFoundException('Project not found');
